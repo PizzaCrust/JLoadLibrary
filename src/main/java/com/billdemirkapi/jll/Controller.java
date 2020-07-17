@@ -10,26 +10,7 @@ import com.sun.jna.Pointer;
 
 public class Controller {
 	
-    static Kernel32 kernel32 = (Kernel32) Native.loadLibrary("kernel32.dll", Kernel32.class, W32APIOptions.ASCII_OPTIONS);
-    static PsapiExt psapi = (PsapiExt) Native.loadLibrary("psapi", PsapiExt.class, W32APIOptions.UNICODE_OPTIONS);
-    
-	public static void main(String[] args) {
-		if(args.length < 2) {
-			System.out.println("JLoadLibrary <Process-ID> <DLL-Path>");
-			System.exit(0);
-		}
-		
-		try {
-           	boolean injectResult = inject(Integer.valueOf(args[0]), args[1]);
-
-           	if(injectResult) 
-           		System.out.println("Injection successful!");
-           	else
-           		System.out.println("Injection failed!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-	}
+    static Kernel32 kernel32 = Native.loadLibrary("kernel32.dll", Kernel32.class, W32APIOptions.ASCII_OPTIONS);
 	
 	public static boolean inject(int processID, String dllName) {
 		DWORD_PTR processAccess = new DWORD_PTR(0x43A);
